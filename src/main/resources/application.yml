@@ -1,0 +1,9 @@
+sinch:
+  key: ${SINCH_KEY}
+  secret: ${SINCH_SECRET}
+  fromPhone: ${SINCH_FROM_PHONE}
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
