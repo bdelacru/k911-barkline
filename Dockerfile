@@ -1,11 +1,11 @@
-# Use an official JDK base image
+# Stage 1: Build the app
+FROM gradle:8.5-jdk17-alpine AS builder
+WORKDIR /app
+COPY --no-cache . .
+RUN gradle build -x test
+
+# Stage 2: Run the app
 FROM eclipse-temurin:17-jdk-alpine
-
-# Argument for the JAR file path
-ARG JAR_FILE=build/libs/*.jar
-
-# Copy the JAR file into the container
-COPY ${JAR_FILE} app.jar
-
-# Command to run the JAR
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+WORKDIR /app
+COPY --from=builder /app/build/libs/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
